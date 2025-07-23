@@ -24,8 +24,7 @@ on:
             
 jobs:
   test:
-    runs-on: 
-      group: ubuntu-latest
+    runs-on: ubuntu-latest 
     env:
       TEST_TAG: ${{ github.event.inputs.test_tag || '@regression' }}
       ENVIRONMENT: ${{ github.event.inputs.environment || 'hml' }}    
