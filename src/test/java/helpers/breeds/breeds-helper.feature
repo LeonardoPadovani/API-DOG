@@ -31,3 +31,12 @@ Scenario: Enviar um GET
     
   * def getStatusCode = responseStatus
   * def getResponse = response
+
+@post_image_random
+Scenario: Enviar um POST 
+
+  Given path '/breeds/image/random'
+  When method POST
+    
+  * def getStatusCode = responseStatus
+  * def getResponse = response  
