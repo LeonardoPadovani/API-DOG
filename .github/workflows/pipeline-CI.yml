@@ -1,0 +1,87 @@
+name: Run Karate Tests
+
+on:
+  schedule:
+    - cron: '20 12 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      test_tag:
+        description: 'Escolha o Teste'
+        required: true
+        default: '@regression'
+        type: choice
+        options:
+          - '@regression'
+          - '@smoke'
+      environment:
+        description: 'Escolha o ambiente'
+        required: true
+        default: 'hml'
+        type: choice
+        options:
+          - dev
+          - hml
+            
+jobs:
+  test:
+    runs-on: 
+      group: ubuntu-latest
+    env:
+      TEST_TAG: ${{ github.event.inputs.test_tag || '@regression' }}
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'hml' }}    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run Karate tests
+        if: always() 
+        run: 
+          mvn test -Dkarate.env=$ENVIRONMENT -Dkarate.options="--tags $TEST_TAG"
+        
+      - name: Upload Cucumber test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+         name: cucumber-test-report
+         path: target/cucumber-html-reports/
+
+      - name: Clean gh-pages folder
+        if: always()
+        run: |
+          rm -rf gh-pages/*
+          mkdir -p gh-pages
+
+      - name: Move reports to 'gh-pages' branch
+        if: always() 
+        run: |
+          mkdir -p gh-pages
+          cp -r target/cucumber-html-reports/* gh-pages/
+          
+
+      - name: Create index.html with redirect
+        if: always()
+        run: |
+         echo '<html><head><meta http-equiv="refresh" content="0; url=overview-features.html"></head></html>' > gh-pages/index.html
+    
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          force_orphan: true
