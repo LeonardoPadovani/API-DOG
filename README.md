@@ -13,7 +13,7 @@ Para exibir o relatorio o final dos testes, vá até a pasta \target\cucumber-ht
 Estrutura do projeto:
 É estruturado em java e é configurado no arquivo pom.xml
 
-há um arquivo pipeline.CI.yml que contém as tasks para rodar a pipe no github actions, mas até o momento nao consegui executar pois fica em QUEUE e não sai disso.
+há um arquivo pipeline.CI.yml que contém as tasks para rodar a pipe no github actions.Após o teste é gerado um arquivo zipado com o relatorio.
 
 FEATURES:
  helpers (helpers\breeds): onde configuro as chamadas para a api de acordo com o recurso, o qual é o breed.Utilizo as tags para montar as chamados de acordo com os métodos e parametros. 
