@@ -1,4 +1,4 @@
-@regression
+@regression @smoke
 Feature: Validar feature breeds
 
   Background: pré condição
@@ -7,7 +7,7 @@ Feature: Validar feature breeds
     #* def common = Java.type('utils.Commons')
 
     # configurar response json 
-    #* def get_response_images= read('classpath:response/breeds/get-response-images.json')
+    * def get_response_images = read('classpath:response/breeds/get-response-images.json')
      
 
   @breeds      
@@ -23,3 +23,27 @@ Feature: Validar feature breeds
     And match getResponse.status == 'success'
    
 
+  @breeds      
+  Scenario: Deve retornar uma lista de breeds com sucesso 
+
+    # GET /breeds/list/all
+    * def get_CallHelper = call read('classpath:helpers/breeds/breeds-helper.feature@get_list_all') 
+    * def getStatusCode = get_CallHelper.getStatusCode
+    * def getResponse = get_CallHelper.getResponse
+    
+    # validações
+    Then match getStatusCode == 200
+    And match getResponse.status == 'success'
+
+
+  @breeds      
+  Scenario: Deve retornar uma breed imagem random com sucesso 
+
+    # GET /breeds/image/random
+    * def get_CallHelper = call read('classpath:helpers/breeds/breeds-helper.feature@get_image_random') 
+    * def getStatusCode = get_CallHelper.getStatusCode
+    * def getResponse = get_CallHelper.getResponse
+    
+    # validações
+    Then match getStatusCode == 200
+    And match getResponse.status == 'success'

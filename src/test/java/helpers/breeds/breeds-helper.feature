@@ -26,8 +26,8 @@ Scenario: POST
 @get_image_random
 Scenario: Enviar um GET 
 
-    Given path '/breeds/image/random
-    When method GET
+  Given path '/breeds/image/random'
+  When method GET
     
-    * def getStatusCode = responseStatus
-    * def getResponse = response
+  * def getStatusCode = responseStatus
+  * def getResponse = response

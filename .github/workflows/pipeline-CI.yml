@@ -59,29 +59,4 @@ jobs:
          name: cucumber-test-report
          path: target/cucumber-html-reports/
 
-      - name: Clean gh-pages folder
-        if: always()
-        run: |
-          rm -rf gh-pages/*
-          mkdir -p gh-pages
-
-      - name: Move reports to 'gh-pages' branch
-        if: always() 
-        run: |
-          mkdir -p gh-pages
-          cp -r target/cucumber-html-reports/* gh-pages/
-          
-
-      - name: Create index.html with redirect
-        if: always()
-        run: |
-         echo '<html><head><meta http-equiv="refresh" content="0; url=overview-features.html"></head></html>' > gh-pages/index.html
-    
-
-      - name: Deploy to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: gh-pages
-          force_orphan: true
+      
