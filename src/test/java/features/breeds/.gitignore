@@ -1,0 +1,37 @@
+# Diretórios e arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs (IntelliJ, Eclipse, VS Code)
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.project
+.classpath
+.settings/
+
+# Build Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+
+# Arquivos de log e evidências de testes
+karate.log
+karate-output.log
+karate-reports/
+reports/
+screenshots/
+
+# Arquivos temporários e sistema operacional
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+
+# Arquivos de configuração local
+.env
+*.local.properties
