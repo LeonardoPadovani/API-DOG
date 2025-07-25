@@ -1,8 +1,6 @@
 name: Run Karate Tests
 
 on:
-  schedule:
-    - cron: '20 12 * * 1-5'
   workflow_dispatch:
     inputs:
       test_tag:
